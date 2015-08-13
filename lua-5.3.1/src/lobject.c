@@ -28,6 +28,8 @@
 #include "lstring.h"
 #include "lvm.h"
 
+/* Lua output redirection */
+#include "luaredir.h"
 
 
 LUAI_DDEF const TValue luaO_nilobject_ = {NILCONSTANT};

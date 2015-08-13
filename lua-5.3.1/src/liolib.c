@@ -22,6 +22,8 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+/* Lua output redirection */
+#include "luaredir.h"
 
 #if !defined(l_checkmode)
 

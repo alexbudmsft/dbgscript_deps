@@ -21,6 +21,8 @@
 #include "lobject.h"
 #include "lstate.h"
 
+/* Lua output redirection */
+#include "luaredir.h"
 
 
 /*

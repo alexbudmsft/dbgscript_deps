@@ -19,6 +19,8 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+/* Lua output redirection */
+#include "luaredir.h"
 
 #if !defined(LUA_PROMPT)
 #define LUA_PROMPT		"> "

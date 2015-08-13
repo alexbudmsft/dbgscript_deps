@@ -23,6 +23,8 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+/* Lua output redirection */
+#include "luaredir.h"
 
 /*
 ** maximum number of captures that a pattern can do during

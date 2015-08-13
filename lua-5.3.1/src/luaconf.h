@@ -11,6 +11,8 @@
 #include <limits.h>
 #include <stddef.h>
 
+/* Lua output redirection */
+#include "luaredir.h"
 
 /*
 ** ===================================================================
