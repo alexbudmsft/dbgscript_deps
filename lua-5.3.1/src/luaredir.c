@@ -17,14 +17,23 @@ int lua_fprintf(FILE* const stream, const char* const fmt, ...)
 	va_start(args, fmt);
 
     /* Don't redirect for stdout/err streams, or if no callback registered. */
-	if (stream == stdout || stream == stderr || !g_StdioCallbacks.cb_vfprintf)
+	if (!g_StdioCallbacks.cb_output || (stream != stdout && stream != stderr))
 	{
 		ret = vfprintf(stream, fmt, args);
 		goto exit;
 	}
 
-    /* Otherwise, call the callback */
-	ret = g_StdioCallbacks.cb_vfprintf(stream, fmt, args);
+    {
+        char buf[1024] = {0};
+        
+        vsprintf(buf, fmt, args);
+        
+        /* Otherwise, call the callback */
+    	g_StdioCallbacks.cb_output(
+    	    stream == stdout ?
+    	    lua_outputNormal : lua_outputError,
+    	    buf);
+    }
     
 exit:
     
@@ -38,14 +47,17 @@ size_t lua_fwrite(const void* buf, size_t size, size_t count, FILE* stream)
     size_t ret = 0;
     
     /* Don't redirect for stdout/err streams, or if no callback registered. */
-    if (stream == stdout || stream == stderr || !g_StdioCallbacks.cb_vfprintf)
+	if (!g_StdioCallbacks.cb_output || (stream != stdout && stream != stderr))
     {
         ret = fwrite(buf, size, count, stream);
         goto exit;
     }
 
     /* Otherwise, call the callback */
-    ret = g_StdioCallbacks.cb_fwrite(buf, size, count, stream);
+	g_StdioCallbacks.cb_output(
+	    stream == stdout ?
+	    lua_outputNormal : lua_outputError,
+	    buf);
     
 exit:
         

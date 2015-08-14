@@ -41,13 +41,17 @@ set (LIB_SOURCES
 	luaredir.c
 )
 
-# Lua DLL.
-#
-add_library(lua-${LUA_VER} SHARED ${LIB_SOURCES})
+add_library(luaobj OBJECT ${LIB_SOURCES})
 
 # Static lib.
 #
-add_library(lua-${LUA_VER}-static STATIC ${LIB_SOURCES})
+add_library(lua-${LUA_VER}-static STATIC $<TARGET_OBJECTS:luaobj>)
+
+# Lua DLL.
+#
+add_library(lua-${LUA_VER} SHARED $<TARGET_OBJECTS:luaobj>)
+
+target_link_libraries (lua-${LUA_VER} lua-${LUA_VER}-static)
 
 # Lua interactive interpreter.
 #
