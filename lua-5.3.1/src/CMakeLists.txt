@@ -1,7 +1,7 @@
 project (lua)
 cmake_minimum_required (VERSION 3.3)
 
-add_definitions(-DLUA_BUILD_AS_DLL)
+add_definitions(-DLUA_BUILD_AS_DLL -DLUA_REDIRECT)
 
 set (LUA_VER 5.3.1)
 set (LIB_SOURCES 
@@ -38,6 +38,7 @@ set (LIB_SOURCES
 	lutf8lib.c
 	lvm.c
 	lzio.c
+	luaredir.c
 )
 
 # Lua DLL.

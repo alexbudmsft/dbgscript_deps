@@ -14,7 +14,8 @@
 
 #include "lua.h"
 
-
+/* Lua output redirection */
+#include "luaredir.h"
 
 /* extra error code for 'luaL_load' */
 #define LUA_ERRFILE     (LUA_ERRERR+1)
