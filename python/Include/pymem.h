@@ -18,6 +18,11 @@ PyAPI_FUNC(void *) PyMem_RawRealloc(void *ptr, size_t new_size);
 PyAPI_FUNC(void) PyMem_RawFree(void *ptr);
 #endif
 
+/* Call these before calling any other Python API that could allocate memory,
+   and after cleaning up the interpreter.
+*/
+PyAPI_FUNC(void) PyMem_CreateGlobalHeap();
+PyAPI_FUNC(void) PyMem_DestroyGlobalHeap();
 
 /* BEWARE:
 
