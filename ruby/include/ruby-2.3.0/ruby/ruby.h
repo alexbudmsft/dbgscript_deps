@@ -1927,6 +1927,9 @@ void ruby_init_stack(volatile VALUE*);
 #endif
 #define Init_stack(addr) ruby_init_stack(addr)
 
+void rb_init_global_heap(void);
+void rb_cleanup_global_heap(void);
+
 int ruby_setup(void);
 int ruby_cleanup(volatile int);
 
