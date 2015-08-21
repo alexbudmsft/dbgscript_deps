@@ -38,7 +38,7 @@ from test.test_import import _ready_to_import
 # ismodule, isclass, ismethod, isfunction, istraceback, isframe, iscode,
 # isbuiltin, isroutine, isgenerator, isgeneratorfunction, getmembers,
 # getdoc, getfile, getmodule, getsourcefile, getcomments, getsource,
-# getclasstree, getargspec, getargvalues, formatargspec, formatargvalues,
+# getclasstree, getargvalues, formatargspec, formatargvalues,
 # currentframe, stack, trace, isdatadescriptor
 
 # NOTE: There are some additional tests relating to interaction with
@@ -464,7 +464,6 @@ class TestDecorators(GetSourceBase):
     def test_getsource_unwrap(self):
         self.assertSourceEqual(mod2.real, 130, 132)
 
-    @unittest.expectedFailure
     def test_decorator_with_lambda(self):
         self.assertSourceEqual(mod2.func114, 113, 115)
 

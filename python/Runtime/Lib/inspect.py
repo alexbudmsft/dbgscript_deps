@@ -16,7 +16,7 @@ Here are some of the useful functions provided by this module:
     getmodule() - determine the module that an object came from
     getclasstree() - arrange classes so as to represent their hierarchy
 
-    getargspec(), getargvalues(), getcallargs() - get info about function arguments
+    getargvalues(), getcallargs() - get info about function arguments
     getfullargspec() - same, with support for Python 3 features
     formatargspec(), formatargvalues() - format an argument spec
     getouterframes(), getinnerframes() - get info about frames
@@ -842,21 +842,37 @@ class BlockFinder:
         self.islambda = False
         self.started = False
         self.passline = False
+        self.indecorator = False
+        self.decoratorhasargs = False
         self.last = 1
 
     def tokeneater(self, type, token, srowcol, erowcol, line):
-        if not self.started:
+        if not self.started and not self.indecorator:
+            # skip any decorators
+            if token == "@":
+                self.indecorator = True
             # look for the first "def", "class" or "lambda"
-            if token in ("def", "class", "lambda"):
+            elif token in ("def", "class", "lambda"):
                 if token == "lambda":
                     self.islambda = True
                 self.started = True
             self.passline = True    # skip to the end of the line
+        elif token == "(":
+            if self.indecorator:
+                self.decoratorhasargs = True
+        elif token == ")":
+            if self.indecorator:
+                self.indecorator = False
+                self.decoratorhasargs = False
         elif type == tokenize.NEWLINE:
             self.passline = False   # stop skipping when a NEWLINE is seen
             self.last = srowcol[0]
             if self.islambda:       # lambdas always end at the first NEWLINE
                 raise EndOfBlock
+            # hitting a NEWLINE when in a decorator without args
+            # ends the decorator
+            if self.indecorator and not self.decoratorhasargs:
+                self.indecorator = False
         elif self.passline:
             pass
         elif type == tokenize.INDENT:
@@ -896,8 +912,10 @@ def getsourcelines(object):
     object = unwrap(object)
     lines, lnum = findsource(object)
 
-    if ismodule(object): return lines, 0
-    else: return getblock(lines[lnum:]), lnum + 1
+    if ismodule(object):
+        return lines, 0
+    else:
+        return getblock(lines[lnum:]), lnum + 1
 
 def getsource(object):
     """Return the text of the source code for an object.
@@ -999,8 +1017,6 @@ def getfullargspec(func):
     'kwonlyargs' is a list of keyword-only argument names.
     'kwonlydefaults' is a dictionary mapping names from kwonlyargs to defaults.
     'annotations' is a dictionary mapping argument names to annotations.
-
-    The first four items in the tuple correspond to getargspec().
 
     This function is deprecated, use inspect.signature() instead.
     """
@@ -1112,8 +1128,7 @@ def formatargspec(args, varargs=None, varkw=None, defaults=None,
                   formatvalue=lambda value: '=' + repr(value),
                   formatreturns=lambda text: ' -> ' + text,
                   formatannotation=formatannotation):
-    """Format an argument spec from the values returned by getargspec
-    or getfullargspec.
+    """Format an argument spec from the values returned by getfullargspec.
 
     The first seven arguments are (args, varargs, varkw, defaults,
     kwonlyargs, kwonlydefaults, annotations).  The other five arguments

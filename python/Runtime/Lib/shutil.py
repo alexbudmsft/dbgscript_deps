@@ -327,7 +327,11 @@ def copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2,
                     if not os.path.exists(linkto) and ignore_dangling_symlinks:
                         continue
                     # otherwise let the copy occurs. copy2 will raise an error
-                    copy_function(srcname, dstname)
+                    if os.path.isdir(srcname):
+                        copytree(srcname, dstname, symlinks, ignore,
+                                 copy_function)
+                    else:
+                        copy_function(srcname, dstname)
             elif os.path.isdir(srcname):
                 copytree(srcname, dstname, symlinks, ignore, copy_function)
             else:
@@ -961,6 +965,9 @@ if hasattr(os, 'statvfs'):
 
     __all__.append('disk_usage')
     _ntuple_diskusage = collections.namedtuple('usage', 'total used free')
+    _ntuple_diskusage.total.__doc__ = 'Total space in bytes'
+    _ntuple_diskusage.used.__doc__ = 'Used space in bytes'
+    _ntuple_diskusage.free.__doc__ = 'Free space in bytes'
 
     def disk_usage(path):
         """Return disk usage statistics about the given path.
