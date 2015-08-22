@@ -10,11 +10,11 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["Nobu Nakada"]
   s.cert_chain = ["certs/nobu.pem"]
-  s.date = "2015-08-08"
+  s.date = "2015-08-21"
   s.description = "add console capabilities to IO instances."
   s.email = "nobu@ruby-lang.org"
   s.extensions = ["extconf.rb"]
-  s.files = ["extconf.rb", "io/console.so", "io/console/size.rb"]
+  s.files = ["extconf.rb", "io/console/size.rb"]
   s.homepage = "http://www.ruby-lang.org"
   s.licenses = ["ruby"]
   s.required_ruby_version = Gem::Requirement.new(">= 2.0.0")

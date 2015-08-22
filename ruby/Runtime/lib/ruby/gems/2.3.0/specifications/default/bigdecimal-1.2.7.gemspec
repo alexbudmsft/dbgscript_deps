@@ -9,11 +9,11 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Kenta Murata", "Zachary Scott", "Shigeo Kobayashi"]
-  s.date = "2015-08-08"
+  s.date = "2015-08-21"
   s.description = "This library provides arbitrary-precision decimal floating-point number class."
   s.email = "mrkn@mrkn.jp"
   s.extensions = ["extconf.rb"]
-  s.files = ["bigdecimal.so", "bigdecimal/jacobian.rb", "bigdecimal/ludcmp.rb", "bigdecimal/math.rb", "bigdecimal/newton.rb", "bigdecimal/util.rb", "extconf.rb"]
+  s.files = ["bigdecimal/jacobian.rb", "bigdecimal/ludcmp.rb", "bigdecimal/math.rb", "bigdecimal/newton.rb", "bigdecimal/util.rb", "extconf.rb"]
   s.homepage = "http://www.ruby-lang.org"
   s.licenses = ["ruby"]
   s.rubygems_version = "2.5.0"

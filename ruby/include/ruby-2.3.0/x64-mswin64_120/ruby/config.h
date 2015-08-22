@@ -159,6 +159,7 @@
 #define DEFAULT_KCODE KCODE_NONE
 #define LOAD_RELATIVE 1
 #define DLEXT ".so"
+#define EXTSTATIC 1
 #define EXECUTABLE_EXTS ".exe",".com",".cmd",".bat"
 #define RUBY_COREDLL "msvcr120"
 #define LIBRUBY_SO "x64-msvcr120-ruby230_d.dll"
