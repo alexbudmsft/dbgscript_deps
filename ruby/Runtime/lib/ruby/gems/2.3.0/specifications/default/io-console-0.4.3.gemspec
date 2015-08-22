@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["Nobu Nakada"]
   s.cert_chain = ["certs/nobu.pem"]
-  s.date = "2015-08-21"
+  s.date = "2015-08-22"
   s.description = "add console capabilities to IO instances."
   s.email = "nobu@ruby-lang.org"
   s.extensions = ["extconf.rb"]
