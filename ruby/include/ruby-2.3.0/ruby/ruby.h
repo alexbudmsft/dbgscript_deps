@@ -1907,6 +1907,10 @@ void* ruby_options(int argc, char** argv);
 int ruby_executable_node(void *n, int *status);
 int ruby_run_node(void *n);
 
+typedef int (*rb_ext_filter)(const char *name);
+
+void ruby_set_ext_filter(rb_ext_filter filt);
+
 /* version.c */
 void ruby_show_version(void);
 void ruby_show_copyright(void);
